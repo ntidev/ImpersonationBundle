@@ -1,0 +1,22 @@
+{
+    "name": "nti/impersonation-bundle",
+    "description": "Symfony2 Bundle to handle user impersonation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Vison",
+            "email": "benjamin@syneteksolutions.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": ">=5.6.0",
+      "symfony/framework-bundle": "^2.8",
+      "symfony/security-bundle": "^2.8"      
+    },
+    "autoload": {
+        "psr-4": {
+            "NTI\\ImpersonationBundle\\": ""
+        }    
+    }
+}
