@@ -62,6 +62,8 @@ class ImpersonationController extends Controller
             error_log("Unable to remove the impersonation key.");
         }
 
-        return $this->redirect($request->getBaseUrl());
+        $redirectRoute = $this->getParameter('nti_impersonation.redirect_route');
+
+        return $this->redirect($this->generateUrl($redirectRoute));
     }
 }
