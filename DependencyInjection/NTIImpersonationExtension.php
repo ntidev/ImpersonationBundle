@@ -24,5 +24,8 @@ class NTIImpersonationExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter( 'nti_impersonation.redirect_route', $config["nti_impersonation"]["redirect_route"]);
+
     }
 }
