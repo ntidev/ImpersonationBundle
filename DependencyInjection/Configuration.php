@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('redirect_route')->required()->notNull()->end();
+            ->scalarNode('redirect_route')->isRequired()->cannotBeEmpty()->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
