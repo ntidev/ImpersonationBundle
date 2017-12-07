@@ -1,4 +1,4 @@
 services:
-#    nti_impersonation.example:
-#        class: NTI\ImpersonationBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    nti_impersonation.key_generator:
+            class: NTI\ImpersonationBundle\Services\KeyGeneratorService
+            arguments: ["@service_container"]
