@@ -31,6 +31,9 @@ This bundle lets you change the login to another user without needing the users'
     # NTI
     nti_impersonation:
         redirect_route: 'deshblard'
+	user_class: 'AppBundle\Entity\User\User'
+	user_class_property: 'username'
+	firewall: 'main'
     ```
 
 4. Update the database schema
@@ -38,6 +41,8 @@ This bundle lets you change the login to another user without needing the users'
     ```
     $ php app/console doctrine:schema:update
     ```
+
+
 
 ### Requirements
 
