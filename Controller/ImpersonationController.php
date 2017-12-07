@@ -47,14 +47,18 @@ class ImpersonationController extends Controller
             throw new NotFoundHttpException("The impersonation request has already expired.");
         }
 
+        $userClass = $this->container->getParameter('nti_impersonation.user_class');
+        $userClassProperty = $this->container->getParameter('nti_impersonation.user_class_property');
+        $firewall = $this->container->getParameter('nti_impersonation.firewall');
+
         $username = $impersonationKey->getUsername();
-        $user = $em->getRepository('AppBundle:User\User')->findOneBy(array("username" => $username));
+        $user = $em->getRepository($userClass)->findOneBy(array($userClassProperty => $username));
 
         if(!$user) {
-            throw new NotFoundHttpException("Unable to find the user to impersonate.");
+            throw new NotFoundHttpException("Unable to find the User to impersonate.");
         }
 
-        $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
+        $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         $tokenStorage = $this->get('security.token_storage');
         $tokenStorage->setToken($token);
 

@@ -30,16 +30,18 @@ class GenerateKeyCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $userClass = $this->container->getParameter('nti_impersonation.user_class');
+        $userClassProperty = $this->container->getParameter('nti_impersonation.user_class_property');
+
         $username = $input->getArgument("username");
 
         // Look for the user
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        # Todo: Configurable, both the repository and the fieldname, and email
-        $user = $em->getRepository('AppBundle:User\User')->findOneBy(array("username" => $username));
+        $user = $em->getRepository($userClass)->findOneBy(array($userClassProperty => $username));
 
         if(!$user) {
-            $output->writeln("Error: The user was not found.");
+            $output->writeln("Error: The User was not found.");
             return;
         }
 

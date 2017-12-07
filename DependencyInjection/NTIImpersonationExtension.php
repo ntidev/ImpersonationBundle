@@ -26,6 +26,9 @@ class NTIImpersonationExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter( 'nti_impersonation.redirect_route', $config["redirect_route"]);
+        $container->setParameter( 'nti_impersonation.user_class', $config["user_class"]);
+        $container->setParameter( 'nti_impersonation.user_class_property', $config["user_class_property"]);
+        $container->setParameter( 'nti_impersonation.firewall', $config["firewall"]);
 
     }
 }
