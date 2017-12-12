@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use NTI\ImpersonationBundle\Entity\ImpersonationKey;
 
 /**
  * Class KeyGeneratorService
