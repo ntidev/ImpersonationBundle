@@ -20,7 +20,6 @@
             "NTI\\ImpersonationBundle" : ""
         }
     },
-    "target-dir" : "NTI/ImpersonationBundle",
     "repositories" : [{
     }],
     "extra" : {
