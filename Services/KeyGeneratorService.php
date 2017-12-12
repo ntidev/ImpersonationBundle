@@ -1,6 +1,6 @@
 <?php
 
-namespace NTI\ImpersonationService\Services;
+namespace NTI\ImpersonationBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
