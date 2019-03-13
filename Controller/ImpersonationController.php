@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Services\KeyGeneratorService;
 
 /**
  * Class ImpersonationController
@@ -75,18 +77,5 @@ class ImpersonationController extends Controller
         return $this->redirect($this->generateUrl($redirectRoute));
     }
 
-    /**
-     * @Route("/generate/{userName}", name="nti_impersonation_generate_key")
-     * @param Request $request
-     * @param $userName
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function getImpersonationKeyAction(Request $request, $userName)
-    {
-        try{
-            return $this->get(KeyGeneratorService::class)->generateKeyServices($username);
-        } catch(\Exception $ex) {
-            throw new Exception("An error occurred while generating a key: ". $ex->getMessage());
-        }
-    }
+
 }
