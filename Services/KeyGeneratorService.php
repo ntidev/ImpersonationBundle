@@ -80,4 +80,49 @@ class KeyGeneratorService
         }
     }
 
+    /**
+     * Generates a new Impersonation key
+     *
+     * @param $username
+     */
+    public function generateKeyServices($username) {
+
+        $userClass = $this->container->getParameter('nti_impersonation.user_class');
+        $userClassProperty = $this->container->getParameter('nti_impersonation.user_class_property');
+
+        // Look for the user
+        $em = $this->container->get('doctrine')->getManager();
+
+        $user = $em->getRepository($userClass)->findOneBy(array($userClassProperty => $username));
+
+        if(!$user) {
+            throw new Exception("Error: The User was not found.");
+        }
+
+        // Look for other keys for that user
+        $previousKeys = $em->getRepository('NTIImpersonationBundle:ImpersonationKey')->findBy(array("username" => $username));
+        foreach($previousKeys as $previousKey) {
+            $em->remove($previousKey);
+        }
+
+        // Prepare the key
+        $key = strtoupper( uniqid(time().md5($username)));
+        $expires = new \DateTime();
+
+        # Todo: Configurable
+        $expires->add(new \DateInterval("PT5M"));
+        $impersonationKey = new ImpersonationKey();
+        $impersonationKey->setExpires($expires);
+        $impersonationKey->setKey($key);
+        $impersonationKey->setUsername($username);
+
+        $em->persist($impersonationKey);
+        try {
+            $em->flush();
+            return $key;
+        } catch (\Exception $ex) {
+            throw new Exception($ex);
+        }
+    }
+
 }

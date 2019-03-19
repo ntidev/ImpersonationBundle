@@ -74,4 +74,29 @@ class ImpersonationController extends Controller
 
         return $this->redirect($this->generateUrl($redirectRoute));
     }
+
+    /**
+     * @Route("/generate/{username}", name="nti_generate_key_impersonate")
+     * @param Request $request
+     * @param $username
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function generateKey(Request $request, $username){
+        $key = '';
+
+        try {
+            $key = $this->get('nti_impersonation.key_generator')->generateKeyServices($username);
+        } catch (\Exception $ex) {
+            $key = '';
+            error_log("Unable to generate the impersonation key.");
+        }
+
+        return new JsonResponse(
+            [
+                "data"=>["key"=>$key],
+                "code"=>200
+            ]
+        );
+    }
+
 }
