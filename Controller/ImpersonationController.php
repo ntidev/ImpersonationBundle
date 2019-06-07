@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class ImpersonationController
@@ -16,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class ImpersonationController extends Controller
 {
     /**
-     * @Route("/{key}", name="nti_impersonation_impersonate")
+     * @Route("/user/{key}", name="nti_impersonation_impersonate")
      * @param Request $request
      * @param $key
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
