@@ -56,7 +56,7 @@ class KeyGeneratorService
         }
 
         // Look for other keys for that user
-        $previousKeys = $em->getRepository('NTIImpersonationBundle:ImpersonationKey')->findBy(array("username" => $username));
+        $previousKeys = $em->getRepository(ImpersonationKey::class)->findBy(array("username" => $username));
         foreach($previousKeys as $previousKey) {
             $em->remove($previousKey);
         }
@@ -74,10 +74,14 @@ class KeyGeneratorService
 
         $em->persist($impersonationKey);
         try {
-            $output->writeln("Key: " . $key . " Expires: " . $expires->format('m/d/Y h:i:s A') . " (".$expires->getTimezone()->getName().")");
+            if($output) {
+                $output->writeln("Key: " . $key . " Expires: " . $expires->format('m/d/Y h:i:s A') . " (".$expires->getTimezone()->getName().")");
+            }
             $em->flush();
         } catch (\Exception $ex) {
-            $output->writeln("An error occurred while generating a key: ". $ex->getMessage());
+            if($output) {                
+                $output->writeln("An error occurred while generating a key: ". $ex->getMessage());
+            }
         }
     }
 
@@ -101,7 +105,7 @@ class KeyGeneratorService
         }
 
         // Look for other keys for that user
-        $previousKeys = $em->getRepository('NTIImpersonationBundle:ImpersonationKey')->findBy(array("username" => $username));
+        $previousKeys = $em->getRepository(ImpersonationKey::class)->findBy(array("username" => $username));
         foreach($previousKeys as $previousKey) {
             $em->remove($previousKey);
         }
