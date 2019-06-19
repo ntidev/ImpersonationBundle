@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use NTI\ImpersonationBundle\Entity\ImpersonationKey;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class KeyGeneratorService
