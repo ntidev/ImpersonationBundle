@@ -48,6 +48,16 @@ class ImpersonationController extends Controller
             throw new NotFoundHttpException("The impersonation request has already expired.");
         }
 
+        if($this->container->has('security.token_storage')){
+            /** @var $token */
+            $token = $this->container->get('security.token_storage')->getToken();
+
+            if (is_object($token->getUser())) {
+                $this->get('security.token_storage')->setToken(null);
+                $this->container->get('session')->clear();
+            }
+        }
+
         $userClass = $this->container->getParameter('nti_impersonation.user_class');
         $userClassProperty = $this->container->getParameter('nti_impersonation.user_class_property');
         $firewall = $this->container->getParameter('nti_impersonation.firewall');
@@ -62,6 +72,7 @@ class ImpersonationController extends Controller
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         $tokenStorage = $this->get('security.token_storage');
         $tokenStorage->setToken($token);
+        $this->container->get('session')->set('session_impersonation_user_id', $user->getId());
 
         $em->remove($impersonationKey);
 
